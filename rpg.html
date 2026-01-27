@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>RPG</title>
+<style>
+body {
+background-color: #000000;
+}
+#b1c {
+position: absolute;
+margin: 0 auto;
+ top: 450px;
+ left: 300px;
+}
+#b2c {
+position: absolute;
+margin: 0 auto;
+ top: 500px;
+ left: 300px;
+}
+#input {
+position: absolute;
+height: 40px;
+border-radius: 10px;
+left: 100px;
+top: 450px;
+}
+#eatput {
+position: absolute;
+height: 40px;
+border-radius: 10px;
+left: 100px;
+top: 500px;
+}
+#b1 {
+background-color: #00cc00;
+width: 100px;
+height: 40px;
+border-radius: 10px;
+border-style: ridge;
+}
+#b2 {
+background-color: #00cc00;
+width: 100px;
+height: 40px;
+border-radius: 10px;
+border-style: ridge;
+}
+#b2:hover {
+background-color: #00aa00;
+}
+#b1:hover {
+background-color: #00aa00;
+}
+#txtc {
+  display: flex;
+ justify-content: center;
+background-color: #008800;
+top: 300px;
+height: 200px;
+}
+#txt {
+color: #ffffff;
+font-size: 25px;
+}
+#gameholder {
+position: fixed;
+background-color: #003300;
+height: 600px;
+width: 500px;
+left: 600px;
+border: solid 5px #00ff00;
+border-radius: 10px
+}
+
+#title {
+   display: flex;
+ justify-content: center;
+color: #ffffff
+}
+#hp {
+color: white;
+position: absolute;
+left: 30px;
+font-size: 30px;
+}
+ #def {
+color: white;
+position: absolute;
+left: 30px;
+top: 40px;
+font-size: 30px;
+}
+  #inventory {
+color: white;
+position: absolute;
+left: 30px;
+top: 280px;
+font-size: 30px;
+}
+
+  #money {
+color: white;
+position: absolute;
+left: 30px;
+top: 80px;
+font-size: 30px;
+}
+  #exp {
+color: white;
+position: absolute;
+left: 30px;
+top: 120px;
+font-size: 30px;
+}
+  #lvl {
+color: white;
+position: absolute;
+left: 30px;
+top: 160px;
+font-size: 30px;
+}
+  #exptolvl {
+color: white;
+position: absolute;
+left: 30px;
+top: 200px;
+font-size: 30px;
+}
+  #dmg {
+color: white;
+position: absolute;
+left: 30px;
+top: 240px;
+font-size: 30px;
+}
+#info {
+ position: fixed;
+background-color: #003300;
+height: 600px;
+width: 500px;
+border: solid 5px #00ff00;
+border-radius: 10px
+}
+#aim {
+position: absolute;
+width: 300px;
+height: 20px;
+background-color: #00ee00;
+top: 350px;
+left: 100px;
+}
+
+#aimark {
+    position: absolute;
+    width: 30px;
+    height: 20px;
+    background-color: #ee0000;
+    top: 0px;
+    left: 135px;
+    border: 1px dashed #990000;
+}
+#runmark {
+    position: absolute;
+    width: 5px;
+    height: 30px;
+    background-color: #ffffff;
+}
+</style>
+</head>
+<body>
+<div id="gameholder">
+<p id="title">RPG</p>
+<div id="txtc">
+<p id="txt">вы находитесь на базе. команды:выйти,отдохнуть,крафт</p>
+</div>
+<div id="aim"><div id="aimark"></div><div id="runmark"></div></div>
+<div id = "b1c">
+<button id="b1" onclick="tap()">действовать</button>
+</div>
+<input id="input" placeholder="действуй..." type="text">
+<input id="eatput" placeholder="название предмета..." type="text">
+<div id="b2c"><button id="b2" onclick="tapeat()">использовать</button></div>
+</div>
+<div id="info">
+<p id="hp">здоровье: 20</p>
+<p id="def">защита: 0</p>
+<p id="money">монеты: 0</p>
+<p id="exp">опыт: 0</p>
+<p id="lvl">уровень: 1</p>
+<p id="exptolvl">до следующего уровня: 15</p>
+<p id="dmg">дополнительный урон: 0</p>
+<p id="inventory">инвентарь: снежки: 5, снег: 3,</p>
+</div>
+<script>
+var plr = {
+hp: 20,
+maxhp: 20,
+money: 0,
+defense: 0,
+inventory: [5,3,0,0,0,0],
+exp: 0,
+lvl: 1,
+dmg: 0,
+exptolvl: 15
+};
+var left = 0;
+var direction = 1;
+var inames = ["снежки","снег","твёрдый снег","лёд","печенье","твердоснежок"]
+var lctn = "home";
+var locations = ["сугроб","сугроб","сугроб","магазин","снежная крепость","снеговик"]
+var see = "";
+var run = false;
+var shoptext = "картонная броня даёт 1 защиту - 40 монет.печенье лечит 5 здоровья и стоит 10 монет. выберите, что купить.команды: назад"
+var enemyhp = 0
+var craftid = 0
+var craft = {
+snowball: {snow: 2},
+hardsnow: {snow: 5}
+};
+function gainxp(exptogain) {
+plr.exp += exptogain;
+if (plr.exp >= plr.exptolvl) {
+lvlup()
+}
+}
+function lvlup() {
+ plr.lvl += 1;
+ plr.exptolvl = (15*plr.lvl);
+ plr.exp = 0;
+ plr.maxhp += 2;
+ plr.dmg += 1
+ document.getElementById("txt").textContent += " вы достигли "+plr.lvl+" уровень"
+}
+ function tapeat() {
+var te = document.getElementById("eatput")
+eat(te.value)
+te.value = ""
+}
+function eat(toeat) {
+if (toeat == "печенье") {
+if (plr.inventory[4] >= 1) {
+document.getElementById("txt").textContent += " вы съели печенье и восстановили 5 здоровья. вкусно!"};
+if (plr.maxhp-plr.hp < 5) {plr.hp = plr.maxhp} else {plr.hp += 5};
+plr.inventory[4] -= 1
+}
+updatestats()
+}
+var enemyid = 0
+var hometext = "вы находитесь на базе. команды:выйти,отдохнуть,крафт";
+function takedmg(dmg,needdef) {
+if (needdef) {
+if (plr.defense >= dmg) {plr.hp -= 1} else {plr.hp -= (dmg-plr.defense)}} else {plr.hp -= dmg}
+}
+function updatestats() {
+    document.getElementById("hp").textContent = "здоровье: " + plr.hp + "/" + plr.maxhp;
+    document.getElementById("def").textContent = "защита: " + plr.defense;
+	document.getElementById("exp").textContent = "опыт: "+ plr.exp;
+	document.getElementById("lvl").textContent = "уровень: " +plr.lvl;
+	document.getElementById("exptolvl").textContent = "до следующего уровня: " + plr.exptolvl;
+	document.getElementById("dmg").textContent = "дополнительный урон: "+ plr.dmg
+	document.getElementById("money").textContent = "монеты: " + plr.money;
+    document.getElementById("inventory").textContent = "инвентарь: ";
+    plr.inventory.forEach(function(idk, i) {
+        var a = document.getElementById("inventory");
+        if (plr.inventory[i] > 0) {
+            a.textContent += inames[i] + ": " + plr.inventory[i] + ", ";
+        }
+    });
+	if (plr.hp <= 0) {setTimeout(() => {say("вы погибли. перезагрузите страницу"); lctn = "dead"},3000);     left = 0;
+    run = false;}
+}
+function craftso(howmany) {
+if (!howmany > 0 || isNaN(howmany)) {say("действие отменено." + hometext); lctn = "home"} else {
+console.log(howmany)
+if (craftid == 0) {
+if (plr.inventory[1] < 2*howmany) {
+say("ресурсов не хватит. " + hometext)
+} else {say("вы слепили снежок. " + hometext); 
+plr.inventory[1] -= 2 * howmany;
+plr.inventory[0] += howmany}
+updatestats()
+}
+else if (craftid == 1) {
+if (plr.inventory[1] < 5*howmany) {
+say("ресурсов не хватит. " + hometext)
+} else {say("вы сделали снег твёрдым. " + hometext); 
+plr.inventory[1] -= 5 * howmany;
+plr.inventory[2] += howmany}
+updatestats()
+}
+else if (craftid == 2) {
+if (plr.inventory[2] >= 2*howmany && plr.inventory[3] >= howmany) {
+say("вы слепили твердоснежок. " + hometext); 
+plr.inventory[2] -= 2 * howmany;
+plr.inventory[3] -= howmany
+plr.inventory[5] += howmany}
+updatestats()
+} else {
+say("ресурсов не хватит. " + hometext)
+}
+if (craftid == 3) {
+if (plr.inventory[3] >= 10 && plr.inventory[2] >= 4) {
+say("вы скрафтили ледоброню и надели её. холодная! " + hometext); 
+plr.inventory[3] -= 10;
+plr.inventory[2] -= 4;
+plr.defense = 3
+updatestats()}
+ else {
+say("ресурсов не хватит. " + hometext)
+}}
+lctn = "home"
+}}
+function tap() {
+if (lctn == "count") {
+craftso(Number(document.getElementById("input").value));
+document.getElementById("input").value = ""
+} else if (lctn == "fight") {
+actf(document.getElementById("input").value,Math.abs(150-left))
+document.getElementById("input").value = ""
+} else {
+var input = document.getElementById("input");
+act(input.value);
+input.value = "";
+}}
+function act(todo) {
+if (todo == "выйти" && lctn == "home") {
+say("вы находитесь на улице. команды: идти,вернуться");
+lctn = "street";
+}
+if (todo == "вернуться" && lctn == "street") {
+lctn = "home";
+see = ""
+say(hometext);
+}
+if (todo == 'отдохнуть'&& lctn == "home") {
+say("отдыхаем...ОЗ восполнены до предела");
+plr.hp = plr.maxhp;
+updatestats();
+lctn = "relax"
+setTimeout(() => {
+   lctn = "home";
+say("вы находитесь на базе. команды:выйти,отдохнуть,крафт")
+}, 3000)
+}
+if (todo == "идти" && lctn == "street") {
+lctn = "going";
+say('идём... подождите немного.');
+setTimeout(() => {
+lctn = "street";
+see = locations[Math.floor(Math.random() * locations.length)];
+say("вы видите "+ see + ". команды:вернуться,идти," + see);
+},Math.floor(Math.random()*3000+5000))
+}
+if (see == "сугроб" && todo == "сугроб") {
+if (Math.random() > 0.4) {
+if (Math.random() > 0.5) {
+var earn = Math.floor(Math.random()*3+1)
+say("вы порылись в сугробе и нашли " + earn + " снег")
+plr.inventory[1] += earn}
+else {var earn = Math.floor(Math.random()*10+10)
+say("вы порылись в сугробе и нашли " + earn + " монет")
+plr.money += earn;
+}
+updatestats()
+}
+else {
+say("вас укусил сугроб!")
+takedmg(5,true)
+updatestats()
+}
+see = ""
+}
+if (lctn == "home" && todo == "крафт") {
+lctn = "craft";
+say("снежок-2снега, твёрдый снег - 5 снега,твердоснежок - 2 твёрдого снега и 1 льда,ледоброня - 4 твёрдого снега и 10 льда. укажите названия предмета который нужно скрафтить.команды: назад")
+}
+if (lctn == "craft" && todo == "назад") {
+lctn = "home"
+say(hometext)
+}
+if (lctn == 'craft' && ( todo == 'снежок' || todo == "твёрдый снег" || todo == "твердоснежок" || todo == "ледоброня")) {
+lctn = "count";
+if (todo == 'снежок') {craftid = 0;}; if (todo == 'твёрдый снег') {craftid = 1};
+if (todo == 'твердоснежок') {craftid = 2};
+if (todo == 'ледоброня') {if (plr.defense >= 3) {lctn = "home"; say("не нужно. "+ hometext)} else {craftid = 3}};
+say("сколько скрафтить? введите число. введите ноль для отмены.")
+}
+if (see == "снежная крепость" && todo == "снежная крепость" && lctn == "street") {
+enemyhp = 15;
+say("в крепости сидел ледовраг команды: удар, снежок, твердоснежок");
+lctn = "fight";
+enemyid = 2;
+aim()
+}
+if (see == "снеговик" && todo == "снеговик" && lctn == "street") {
+enemyhp = 10;
+say("тут снеговик. команды: удар, снежок, твердоснежок");
+enemyid = 1
+lctn = "fight"
+aim()
+}
+if (see == "магазин" && todo == "магазин") {
+lctn = "shop"
+say("вы вошли в магазин.команды: купить,уйти")
+};
+if (lctn == "shop" && todo == "уйти") {
+lctn = "street";
+see = ""
+say("вы ушли от магазина.команды: вернуться,идти")
+};
+if (lctn == "shop" && todo == "купить") {
+say(shoptext);
+lctn = "buy"
+};
+if (lctn == "buy" && todo == "картонная броня") {
+if (plr.defense >= 1) {say("вам это не нужно. "+shoptext); lctn = "buy"} else if (plr.money >= 40) {
+plr.defense = 1;
+plr.money -= 40;
+say("вы купили и надели картонную броню. пахнет картоном. "+shoptext);
+lctn = "buy"
+updatestats()
+} else {say("не хватает монет. вам нужно ещё " + (40-plr.money) + " монет "+shoptext)}
+};
+if (lctn == "buy" && todo == "печенье") {
+if (plr.money >= 10) {say("вы купили печеньку. выглядит вкусной. "+shoptext); plr.money -= 10; plr.inventory[4]+=1} else
+ {say("не хватает "+(10-plr.money) + " монет " + shoptext)};
+ updatestats()
+}
+if (lctn == "buy" && todo == "назад") {
+lctn = "shop";
+say("вы находитесь в магазине. команды: купить,уйти")
+}
+} //напоминание себе это закрывает фуекцию todo() ни в коем случае не удалять
+function say(slovo) {
+document.getElementById("txt").textContent = slovo;
+}
+function aim() {
+var mark = document.getElementById("runmark")
+run = true;
+aimloop()
+}
+function aimloop() {
+document.getElementById("runmark").style.left = "0px"
+if (run) {
+    const mark = document.getElementById("runmark");
+
+    if (left >= 300) {
+        direction = -1;
+        left = 300;
+    } else if (left <= 0) {
+        direction = 1;
+        left = 0;
+    }
+
+    
+    left += direction * 4;
+    mark.style.left = left + "px";
+
+    requestAnimationFrame(aimloop);}
+}
+function actf(tofight,power) {
+//ход игрока
+
+
+var dmg = 0
+if (tofight == "удар")  {dmg = 1}
+ else if (tofight == 'снежок') {if (plr.inventory[0] > 0) {dmg = 2; plr.inventory[0] -= 1}
+ else {say("нет снежков. пропуск хода")}}
+else if (tofight == "твердоснежок") {if (plr.inventory[5] >= 1) {dmg = 3.5; plr.inventory[5]-=1}};
+if (power <= 15) {dmg *= 3} else if (power <= 23) {dmg *= 2};
+dmg = Math.round(dmg);
+dmg += plr.dmg
+enemyhp -= dmg;
+var edmg;
+// враг атакует
+if (enemyid == 2) {edmg = Math.floor(Math.random()*2+5)} else if (enemyid == 1) {
+edmg = Math.floor(Math.random()*2 + 2)}
+takedmg(edmg,true);
+if (plr.defense >= edmg) {edmg = 1} else {edmg -= plr.defense};
+say("вы нанесли " + dmg + ".у врага осталось " + enemyhp + ".вам нанесли "+ edmg + " хп");
+updatestats()
+if (enemyhp < 1) {
+if (enemyid == 1) {
+    var gotsnow = Math.floor(Math.random()*4 + 8);
+	var earnexp = Math.floor(Math.random()*2+2)
+    plr.inventory[1] += gotsnow;
+    plr.money += 20;
+    lctn = "street"
+    see = ""
+    say("вы победили врага и получили 20 монет и " + gotsnow + " снега и "+earnexp+" опыта")
+	gainxp(earnexp)
+    left = 0;
+	enemyid = 0;
+    run = false;} else if (enemyid == 2) {
+	var gotice = Math.floor(Math.random()*2 + 6);
+	var earnexp = Math.floor(Math.random()*3+3);
+    plr.inventory[3] += gotice;
+    plr.money += 25;
+    lctn = "street"
+    see = ""
+    say("вы победили врага и получили 25 монет и " + gotice + " льда и "+earnexp+" опыта")
+	gainxp(earnexp)
+    left = 0;
+	run = false;
+	enemyid = 0;
+	}
+	updatestats()
+}
+updatestats();
+}
+updatestats();
+aimloop();
+</script>
+</body>
+</html>
