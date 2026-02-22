@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Море капч</title>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+    margin: 0;
+    padding: 14px;
+  }
+
+  h2 {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+  }
+
+  .captcha {
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+    min-height: 52px;
+  }
+
+  .captcha:active {
+    transform: scale(0.98);
+  }
+
+  .box {
+    width: 28px;
+    height: 28px;
+    border: 2px solid #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .captcha span {
+    font-size: 15px;
+    line-height: 1.2;
+  }
+
+  .success {
+    color: #1faa00;
+  }
+
+  .fail {
+    color: #e00000;
+  }
+
+  .loading {
+    border: 3px solid #ddd;
+    border-top: 3px solid #555;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Очень маленькие телефоны */
+  @media (max-width: 420px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .captcha span {
+      font-size: 14px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h2>Найдите настоящую капчу</h2>
+<div class="grid" id="grid"></div>
+
+<script>
+const phrases = [
+  "Я робот",
+  "Я стиральная машинка",
+  "Я киборг",
+  "Я ошибка 404",
+  "Я голосовой помощник",
+  "Я холодильник",
+  "Я тостер",
+  "Я баг",
+  "Я сервер",
+  "Я нейросеть",
+  "Я пылесос",
+  "Я микроволновка",
+  "Я Wi-Fi роутер",
+  "Я алгоритм",
+  "Я NPC",
+  "Я принтер",
+  "Я база данных",
+  "Я браузер",
+  "Я монитор",
+  "Я консоль",
+  "Я процессор",
+  "Я видеокарта",
+  "Я драйвер",
+  "Я чат-бот",
+  "Я код",
+  "Я JavaScript",
+  "Я HTML",
+  "Я CSS",
+  "Я пиксель",
+  "Я серверная ошибка",
+  "Я загрузка",
+  "Я апдейт системы",
+  "Я облако",
+  "Я дата-центр",
+  "Я терминал",
+  "Я пакет данных",
+  "Я интернет",
+  "Я глюк",
+  "Я патч",
+  "Я тестовый режим",
+  "Я искусственный интеллект",
+  "Я скрипт",
+  "Я API",
+  "Я багфикс"
+];
+
+const grid = document.getElementById("grid");
+const captchaCount = 260;
+const realIndex = Math.floor(Math.random() * captchaCount);
+
+for (let i = 0; i < captchaCount; i++) {
+  let text = (i === realIndex)
+    ? "Я не робот"
+    : phrases[Math.floor(Math.random() * phrases.length)];
+
+  const captcha = document.createElement("div");
+  captcha.className = "captcha";
+
+  const box = document.createElement("div");
+  box.className = "box";
+
+  const label = document.createElement("span");
+  label.textContent = text;
+
+  captcha.appendChild(box);
+  captcha.appendChild(label);
+  grid.appendChild(captcha);
+
+  let clicked = false;
+
+  captcha.addEventListener("click", () => {
+    if (clicked) return;
+    clicked = true;
+
+    box.innerHTML = "";
+    const loader = document.createElement("div");
+    loader.className = "loading";
+    box.appendChild(loader);
+
+    setTimeout(() => {
+      box.innerHTML = "";
+      if (text === "Я не робот") {
+        box.textContent = "✔";
+        box.classList.add("success");
+      } else {
+        box.textContent = "✖";
+        box.classList.add("fail");
+      }
+    }, 700 + Math.random() * 1100);
+  });
+}
+</script>
+
+</body>
+</html>
