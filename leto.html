@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>До лета осталось</title>
+<style>
+h1 {
+display: flex;
+justify-content: center;
+font-size: 6vh;
+}
+p {
+display: flex;
+justify-content: center;
+font-size: 4vh;
+}
+div {
+display: flex;
+justify-content: center;
+}
+progress {
+width: 80vw;
+height: 10vh;
+}
+</style>
+</head>
+<body>
+<h1>Сколько осталось до лета</h1>
+<p id="t">До лета осталось дней</p>
+<div><progress id="pro" max=273></progress></div>
+<p id="c"></p>
+<script>
+var now = new Date()
+const c = document.getElementById("c")
+const pro = document.getElementById("pro")
+const t = document.getElementById("t")
+var isnowleto = false
+var visokosny = false
+var leto
+var konec = new Date(leto)
+
+setInterval(()=>{
+now = new Date()
+
+if (now.getMonth() <= 4) {
+leto = new Date(now.getFullYear() + "-06-01T00:00:00")
+} else {leto = new Date((now.getFullYear()+1) + "-06-01T00:00:00")}
+konec.setFullYear(leto.getFullYear() - 1)
+konec.setDate(konec.getDate()+92)
+
+if (now.getMonth() >= 5 && now.getMonth() <= 7) {isnowleto = true} else {isnowleto = false}
+if (new Date(now.getFullYear(),1,29).getDate() === 29) {visokosny = true} else {visokosny = false}
+if (isnowleto) {pro.max = 92}
+else if (!isnowleto && visokosny) {pro.max = 274} else {pro.max = 273}
+
+if (!isnowleto) {
+t.textContent = "До лета осталось " + Math.floor((leto-now)/86400000) + " дней"
+pro.value = pro.max - ((leto-now)/86400000)
+if ((leto-now)/86400000 <= 30) {c.textContent = "Ура скоро лето 😎"} else {
+c.textContent = ""}
+} else {
+t.textContent = "До конца лета осталось " + Math.floor((konec-now)/86400000) + " дней"
+pro.value = pro.max - (konec-now)/86400000
+if ((konec-now)/86400000 <= 14) {c.textContent = "Внимание скоро конец лета ⚠"} else {
+c.textContent = ""}
+}
+},1000)
+</script>
+</body>
+</html>
