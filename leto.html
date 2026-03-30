@@ -17,21 +17,27 @@ div {
 display: flex;
 justify-content: center;
 }
-progress {
+#pro {
 width: 80vw;
 height: 10vh;
+}
+#task {
+position: relative;
+height: 100%;
+background-color: #00ff00;
 }
 </style>
 </head>
 <body>
 <h1>Сколько осталось до лета</h1>
 <p id="t">До лета осталось дней</p>
-<div><progress id="pro" max=273></progress></div>
+<div id="pro"><div id="task"></div></div>
 <p id="c"></p>
 <script>
 var now = new Date()
 const c = document.getElementById("c")
 const pro = document.getElementById("pro")
+const task = document.getElementById("task")
 const t = document.getElementById("t")
 var isnowleto = false
 var visokosny = false
@@ -54,12 +60,12 @@ else if (!isnowleto && visokosny) {pro.max = 274} else {pro.max = 273}
 
 if (!isnowleto) {
 t.textContent = "До лета осталось " + Math.floor((leto-now)/86400000) + " дней"
-pro.value = pro.max - ((leto-now)/86400000)
+t.textContent = "До конца лета осталось " + Math.floor((leto-now)/86400000) + " дней"
 if ((leto-now)/86400000 <= 30) {c.textContent = "Ура скоро лето 😎"} else {
 c.textContent = ""}
 } else {
 t.textContent = "До конца лета осталось " + Math.floor((konec-now)/86400000) + " дней"
-pro.value = pro.max - (konec-now)/86400000
+pro.style.width = parseInt(task.style.width) - parseInt(task.style.width)/((konec-now)/86400000)*100 + "%"
 if ((konec-now)/86400000 <= 14) {c.textContent = "Внимание скоро конец лета ⚠"} else {
 c.textContent = ""}
 }
