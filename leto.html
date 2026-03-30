@@ -1,75 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>До лета осталось</title>
-<style>
-h1 {
-display: flex;
-justify-content: center;
-font-size: 6vh;
-}
-p {
-display: flex;
-justify-content: center;
-font-size: 4vh;
-}
-div {
-display: flex;
-justify-content: center;
-}
-#pro {
-width: 80vw;
-height: 10vh;
-}
-#task {
-position: relative;
-height: 100%;
-background-color: #00ff00;
-}
-</style>
+    <title>До лета осталось</title>
+    <style>
+        body { font-family: sans-serif; }
+        h1, p, .container { display: flex; justify-content: center; }
+        h1 { font-size: 6vh; }
+        p { font-size: 4vh; }
+        
+        #pro {
+            width: 80vw;
+            height: 5vh;
+            background-color: #eee;
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        #task {
+            width: 0%; /* Начальная ширина */
+            height: 100%;
+            background-color: #00ff00;
+            transition: width 0.5s; /* Плавность */
+        }
+    </style>
 </head>
 <body>
-<h1>Сколько осталось до лета</h1>
-<p id="t">До лета осталось дней</p>
-<div id="pro"><div id="task"></div></div>
-<p id="c"></p>
+    <h1>Таймер лета</h1>
+    <p id="t">Загрузка...</p>
+    <div id="pro"><div id="task"></div></div>
+    <p id="c"></p>
+
 <script>
-var now = new Date()
-const c = document.getElementById("c")
-const pro = document.getElementById("pro")
-const task = document.getElementById("task")
-const t = document.getElementById("t")
-var isnowleto = false
-var visokosny = false
-var leto
-var konec = new Date(leto)
+    const c = document.getElementById("c");
+    const task = document.getElementById("task");
+    const t = document.getElementById("t");
 
-setInterval(()=>{
-now = new Date()
+    setInterval(() => {
+        const now = new Date();
+        const year = now.getFullYear();
+        
+        // Определяем дату начала лета (1 июня)
+        let letoStart = new Date(year, 5, 1); 
+        if (now > new Date(year, 7, 31)) {
+            letoStart = new Date(year + 1, 5, 1); // Если лето уже прошло, берем следующее
+        }
 
-if (now.getMonth() <= 4) {
-leto = new Date(now.getFullYear() + "-06-01T00:00:00")
-} else {leto = new Date((now.getFullYear()+1) + "-06-01T00:00:00")}
-konec.setFullYear(leto.getFullYear() - 1)
-konec.setDate(konec.getDate()+92)
+        // Определяем дату конца лета (31 августа)
+        let letoEnd = new Date(letoStart.getFullYear(), 8, 0);
 
-if (now.getMonth() >= 5 && now.getMonth() <= 7) {isnowleto = true} else {isnowleto = false}
-if (new Date(now.getFullYear(),1,29).getDate() === 29) {visokosny = true} else {visokosny = false}
-if (isnowleto) {pro.max = 92}
-else if (!isnowleto && visokosny) {pro.max = 274} else {pro.max = 273}
+        const isNowLeto = now >= new Date(year, 5, 1) && now <= new Date(year, 7, 31);
+        
+        if (!isNowLeto) {
+            // Считаем дни ДО лета
+            const diff = letoStart - now;
+            const days = Math.floor(diff / 86400000);
+            t.textContent = "До лета осталось " + days + " дней";
+            
+            // Прогресс (приблизительно от начала года до 1 июня)
+            const startPoint = new Date(letoStart.getFullYear(), 0, 1);
+            const totalWait = letoStart - startPoint;
+            const currentWait = now - startPoint;
+            const progress = Math.max(0, Math.min(100, (currentWait / totalWait) * 100));
+            task.style.width = progress + "%";
 
-if (!isnowleto) {
-t.textContent = "До лета осталось " + Math.floor((leto-now)/86400000) + " дней"
-t.textContent = "До конца лета осталось " + Math.floor((leto-now)/86400000) + " дней"
-if ((leto-now)/86400000 <= 30) {c.textContent = "Ура скоро лето 😎"} else {
-c.textContent = ""}
-} else {
-t.textContent = "До конца лета осталось " + Math.floor((konec-now)/86400000) + " дней"
-pro.style.width = parseInt(task.style.width) - parseInt(task.style.width)/((konec-now)/86400000)*100 + "%"
-if ((konec-now)/86400000 <= 14) {c.textContent = "Внимание скоро конец лета ⚠"} else {
-c.textContent = ""}
-}
-},1000)
+            c.textContent = days <= 30 ? "Ура, скоро лето 😎" : "";
+        } else {
+            // Считаем дни ДО КОНЦА лета
+            const diff = letoEnd - now;
+            const days = Math.floor(diff / 86400000);
+            t.textContent = "До конца лета осталось " + days + " дней";
+            
+            // Прогресс внутри самого лета (92 дня)
+            const totalSummer = letoEnd - letoStart;
+            const passedSummer = now - letoStart;
+            const progress = 100 - (passedSummer / totalSummer * 100);
+            task.style.width = progress + "%";
+
+            c.textContent = days <= 14 ? "Внимание, скоро конец лета ⚠" : "";
+        }
+    }, 1000);
 </script>
 </body>
 </html>
