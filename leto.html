@@ -1,84 +1,135 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>До лета осталось</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Таймер Лета</title>
     <style>
-        body { font-family: sans-serif; }
-        h1, p, .container { display: flex; justify-content: center; }
-        h1 { font-size: 6vh; }
-        p { font-size: 4vh; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #f0f2f5;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        h1 { font-size: 6vh; color: #333; margin-bottom: 10px; }
+        p { font-size: 4vh; color: #555; margin: 10px 0; }
         
         #pro {
-            width: 80vw;
-            height: 5vh;
-            background-color: #eee;
-            margin: 0 auto;
-            border-radius: 10px;
+            width: 85vw;
+            height: 6vh;
+            background-color: #ddd;
+            border-radius: 50px;
             overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
         }
+        
         #task {
-            width: 0%; /* Начальная ширина */
+            width: 0%; 
             height: 100%;
-            background-color: #00ff00;
-            transition: width 0.5s; /* Плавность */
+            background-color: #ffa500; /* Цвет ожидания */
+            transition: width 1s linear, background-color 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 2vh;
+        }
+
+        #c {
+            font-weight: bold;
+            color: #d9534f;
+            height: 5vh;
         }
     </style>
 </head>
 <body>
-    <h1>Таймер лета</h1>
+
+    <h1 id="header">Таймер лета</h1>
     <p id="t">Загрузка...</p>
-    <div id="pro"><div id="task"></div></div>
+    
+    <div id="pro">
+        <div id="task">0%</div>
+    </div>
+    
     <p id="c"></p>
 
 <script>
     const c = document.getElementById("c");
     const task = document.getElementById("task");
     const t = document.getElementById("t");
+    const header = document.getElementById("header");
 
-    setInterval(() => {
+    function updateTimer() {
         const now = new Date();
         const year = now.getFullYear();
         
-        // Определяем дату начала лета (1 июня)
-        let letoStart = new Date(year, 5, 1); 
-        if (now > new Date(year, 7, 31)) {
-            letoStart = new Date(year + 1, 5, 1); // Если лето уже прошло, берем следующее
+        // Ключевые даты
+        let letoStart = new Date(year, 5, 1); // 1 июня
+        let letoEnd = new Date(year, 8, 0, 23, 59, 59); // 31 августа
+        
+        // Если текущий год уже перевалил за лето, берем лето следующего года
+        if (now > letoEnd) {
+            letoStart = new Date(year + 1, 5, 1);
+            letoEnd = new Date(year + 1, 8, 0, 23, 59, 59);
         }
 
-        // Определяем дату конца лета (31 августа)
-        let letoEnd = new Date(letoStart.getFullYear(), 8, 0);
-
-        const isNowLeto = now >= new Date(year, 5, 1) && now <= new Date(year, 7, 31);
+        const isNowLeto = now >= letoStart && now <= letoEnd;
         
         if (!isNowLeto) {
-            // Считаем дни ДО лета
+            // ПЕРИОД ОЖИДАНИЯ (9 месяцев: с 1 сентября по 1 июня)
+            const waitStart = new Date(letoStart.getFullYear() - 1, 8, 1);
+            const totalWaitMs = letoStart - waitStart;
+            const passedWaitMs = now - waitStart;
+            
             const diff = letoStart - now;
             const days = Math.floor(diff / 86400000);
-            t.textContent = "До лета осталось " + days + " дней";
+            const hours = Math.floor((diff % 86400000) / 3600000);
             
-            // Прогресс (приблизительно от начала года до 1 июня)
-            const startPoint = new Date(letoStart.getFullYear(), 0, 1);
-            const totalWait = letoStart - startPoint;
-            const currentWait = now - startPoint;
-            const progress = Math.max(0, Math.min(100, (currentWait / totalWait) * 100));
+            header.textContent = "Ждем лето";
+            t.textContent = `До лета осталось: ${days}д. ${hours}ч.`;
+            
+            // Прогресс от 9 месяцев
+            let progress = (passedWaitMs / totalWaitMs) * 100;
+            progress = Math.max(0, Math.min(100, progress));
+            
             task.style.width = progress + "%";
+            task.textContent = Math.floor(progress) + "% ожидания прошло";
+            task.style.backgroundColor = "#ffa500"; // Оранжевый
 
             c.textContent = days <= 30 ? "Ура, скоро лето 😎" : "";
         } else {
-            // Считаем дни ДО КОНЦА лета
+            // ПЕРИОД ЛЕТА (3 месяца: июнь, июль, август)
+            const totalSummerMs = letoEnd - letoStart;
+            const passedSummerMs = now - letoStart;
+            
             const diff = letoEnd - now;
             const days = Math.floor(diff / 86400000);
-            t.textContent = "До конца лета осталось " + days + " дней";
+            const hours = Math.floor((diff % 86400000) / 3600000);
             
-            // Прогресс внутри самого лета (92 дня)
-            const totalSummer = letoEnd - letoStart;
-            const passedSummer = now - letoStart;
-            const progress = 100 - (passedSummer / totalSummer * 100);
+            header.textContent = "Сейчас лето! ☀️";
+            t.textContent = `До конца лета: ${days}д. ${hours}ч.`;
+            
+            // Прогресс от 3 месяцев
+            let progress = (passedSummerMs / totalSummerMs) * 100;
+            progress = Math.max(0, Math.min(100, progress));
+            
             task.style.width = progress + "%";
+            task.textContent = Math.floor(progress) + "% лета позади";
+            task.style.backgroundColor = "#00ff00"; // Зеленый
 
-            c.textContent = days <= 14 ? "Внимание, скоро конец лета ⚠" : "";
+            c.textContent = days <= 14 ? "Внимание, лето уходит! ⚠" : "";
         }
-    }, 1000);
+    }
+
+    // Запуск и обновление каждую секунду
+    updateTimer();
+    setInterval(updateTimer, 1000);
 </script>
+
 </body>
 </html>
