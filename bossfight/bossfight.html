@@ -58,7 +58,11 @@ img {
     image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-optimize-contrast;
     -ms-interpolation-mode: nearest-neighbor;
-	position:relative;
+	position: relative;
+	top: 0vh;
+}
+:fullscreen img {
+transform: scale(0.6)
 }
 @keyframes anim {
 0%, 100% {opacity: 0; transform: translateY(0px)}
@@ -106,6 +110,7 @@ background-color: grey;
 border-radius: 50%;
 }
 :fullscreen #gamecontainer {
+
 display: flex;
 justify-content: center;
 align-items: center;
@@ -113,7 +118,7 @@ background-color: #000000;
 flex-direction: column;
 min-height: 100vh;
 width: 100vw;
-transform: scale(0.7)
+transform: scale(0.6)
 }
 #gamecontainer {
 display: flex;
