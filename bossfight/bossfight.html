@@ -11,7 +11,9 @@ display: flex;
 justify-content: center;
 align-items: center;
 background-color: #000000;
-flex-direction: column
+flex-direction: column;
+overflow: hidden;
+position: fixed;
 }
 .actions {
 width: 100px;
@@ -87,8 +89,6 @@ width: 70px;
 height: 70px;
 background-color: white;
 border-radius: 50%;
-top: 70px;
-left: 70px;
 z-index: 999999;
 opacity: 1;
 }
@@ -197,6 +197,7 @@ game.height = 170
 
 function tm(touches) {
 var rect = joy.getBoundingClientRect()
+var rect2 = stick.getBoundingClientRect()
 var center = [rect.left + rect.width / 2,rect.top + rect.height / 2]
 var minimum = 20
 for (i=0;i<touches.length;i++) {
@@ -206,8 +207,8 @@ if (t.clientX < window.innerWidth/2) {correcttouch = t; break}
 if (correcttouch.clientX < window.innerWidth/2) {
 var dpos = [correcttouch.clientX - center[0], correcttouch.clientY - center[1]]
 stick.style.position = "fixed"
-stick.style.left = correcttouch.clientX - Number(stick.style.width.replace("px",""))/2 +"px"
-stick.style.top = correcttouch.clientY - Number(stick.style.height.replace("px",""))/2 +"px"
+stick.style.left = correcttouch.clientX - window.innerWidth* 0.2 +"px"
+stick.style.top = correcttouch.clientY - window.innerHeight* -0.01 +"px"
 keys.ArrowRight = dpos[0] > minimum
 keys.ArrowLeft = dpos[0] < -minimum
 keys.ArrowUp = dpos[1] < -minimum
