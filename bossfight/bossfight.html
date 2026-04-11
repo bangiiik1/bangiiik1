@@ -45,6 +45,7 @@ height: 20px;
 }
 #hpbar2 {
 position: relative;
+top: -40vh;
 background-color: red;
 width: 200px;
 height: 20px;
@@ -84,7 +85,7 @@ width: 200px;
 height: 200px;
 background-color: grey;
 border-radius: 50%;
-top: 60vh;
+top: 30vh;
 left: -10vw;
 z-index: 9999;
 opacity: 0.6;
@@ -100,7 +101,7 @@ opacity: 1;
 }
 #bh {
 position:fixed;
-top: 70vh;
+top: 30vh;
 left: 100vw;
 }
 #bz {
@@ -215,7 +216,7 @@ if (correcttouch.clientX < window.innerWidth/2) {
 var dpos = [correcttouch.clientX - center[0], correcttouch.clientY - center[1]]
 stick.style.position = "fixed"
 stick.style.left = correcttouch.clientX - window.innerWidth* 0.25 +"px"
-stick.style.top = correcttouch.clientY - window.innerHeight* -0.01 +"px"
+stick.style.top = correcttouch.clientY - window.innerHeight* 0.1 +"px"
 keys.ArrowRight = dpos[0] > minimum
 keys.ArrowLeft = dpos[0] < -minimum
 keys.ArrowUp = dpos[1] < -minimum
