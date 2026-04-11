@@ -105,10 +105,30 @@ color: white;
 background-color: grey;
 border-radius: 50%;
 }
+:fullscreen #gamecontainer {
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: #000000;
+flex-direction: column;
+height: 100vh;
+width: 100vw;
+transform: scale(0.7)
+}
+#gamecontainer {
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: #000000;
+flex-direction: column;
+height: 100vh;
+width: 100vw;
+}
 </style>
 <title>bossfight</title>
 </head>
 <body>
+<div id="gamecontainer">
 <div id="bh"><button id="bz">z</button></div>
 <div id="joy"><div id="stick"></div></div>
 <p id="dt" hidden></p>
@@ -121,6 +141,7 @@ border-radius: 50%;
 <div id="act" class="actions"><p class="acttext">действие</p></div>
 <div id="item" class="actions"><p class="acttext">предмет</p></div>
 <div id="mercy" class="actions"><p class="acttext">пощада</p></div>
+</div>
 </div>
 <script>
 // получаю элементы
