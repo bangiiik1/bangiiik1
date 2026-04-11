@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <style>
 #game {
 border: 5px solid #ffffff;
@@ -110,15 +110,13 @@ background-color: grey;
 border-radius: 50%;
 }
 :fullscreen #gamecontainer {
-position: relative;
 display: flex;
 justify-content: center;
 align-items: center;
 background-color: #000000;
 flex-direction: column;
-min-height: 100vh;
+height: 100%;
 width: 100vw;
-top: -30vh;
 transform: scale(0.6)
 }
 #gamecontainer {
@@ -213,7 +211,7 @@ if (t.clientX < window.innerWidth/2) {correcttouch = t; break}
 if (correcttouch.clientX < window.innerWidth/2) {
 var dpos = [correcttouch.clientX - center[0], correcttouch.clientY - center[1]]
 stick.style.position = "fixed"
-stick.style.left = correcttouch.clientX - window.innerWidth* 0.2 +"px"
+stick.style.left = correcttouch.clientX - window.innerWidth* 0.25 +"px"
 stick.style.top = correcttouch.clientY - window.innerHeight* -0.01 +"px"
 keys.ArrowRight = dpos[0] > minimum
 keys.ArrowLeft = dpos[0] < -minimum
