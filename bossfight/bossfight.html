@@ -230,6 +230,7 @@ if (ys < y) {ys += 1} else {ys -=1};
 game.height = ys;
 },1)
 }
+document.body.addEventListener("touchstart",(e)=>{document.documentElement.requestFullscreen();})
 // проверка на касание двух прямоугольников
 function touch(shape1,shape2) {
 var x1 = shape1[0]
