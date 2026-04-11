@@ -5,6 +5,8 @@
 <style>
 #game {
 border: 5px solid #ffffff;
+position:relative;
+bottom: 70px;
 }
 body {
 display: flex;
@@ -12,8 +14,8 @@ justify-content: center;
 align-items: center;
 background-color: #000000;
 flex-direction: column;
-//overflow: hidden;
-//position: fixed;
+overflow: hidden;
+position: fixed;
 }
 .actions {
 width: 100px;
@@ -27,11 +29,11 @@ color: #ff8800;
 display: flex;
 gap: 10px;
 position: relative;
-top: 30px;
+bottom: 30px;
 }
 #hpbar {
 position: relative;
-top: 20px;
+bottom: 40px;
 background-color: red;
 width: 200px;
 height: 20px;
@@ -59,7 +61,7 @@ img {
     image-rendering: -webkit-optimize-contrast;
     -ms-interpolation-mode: nearest-neighbor;
 	position: relative;
-	top: 0vh;
+	top: -15vh;
 }
 :fullscreen img {
 transform: scale(0.6)
