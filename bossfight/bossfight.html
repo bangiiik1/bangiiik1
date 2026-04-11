@@ -6,6 +6,9 @@
 #game {
 border: 5px solid #ffffff;
 position:relative;
+
+}
+:fullscreen #game {
 bottom: 60vh;
 }
 body {
@@ -29,14 +32,20 @@ color: #ff8800;
 display: flex;
 gap: 10px;
 position: relative;
+
+}
+:fullscreen #actions {
 bottom: 50vh;
 }
 #hpbar {
 position: relative;
-bottom: 57vh;
+
 background-color: red;
 width: 200px;
 height: 20px;
+}
+:fullscreen #hpbar {
+bottom: 57vh;
 }
 #task {
 background-color: yellow;
@@ -45,10 +54,13 @@ height: 20px;
 }
 #hpbar2 {
 position: relative;
-top: -40vh;
+
 background-color: red;
 width: 200px;
 height: 20px;
+}
+:fullscreen #hpbar2 {
+top: -40vh;
 }
 #task2 {
 background-color: lime;
@@ -62,10 +74,11 @@ img {
     image-rendering: -webkit-optimize-contrast;
     -ms-interpolation-mode: nearest-neighbor;
 	position: relative;
-	top: -50vh;
+	
 }
 :fullscreen img {
-transform: scale(0.6)
+transform: scale(0.6);
+top: -50vh;
 }
 @keyframes anim {
 0%, 100% {opacity: 0; transform: translateY(0px)}
@@ -85,11 +98,14 @@ width: 200px;
 height: 200px;
 background-color: grey;
 border-radius: 50%;
-top: 30vh;
 left: -10vw;
 z-index: 9999;
+top: 30vh;
 opacity: 0.6;
 }
+
+
+
 #stick {
 position: relative;
 width: 70px;
