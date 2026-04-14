@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>breakout</title>
+<style>
+body {
+background-color: black;
+margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    touch-action: none;
+}
+#game {
+background-color: #black
+}
+</style>
+</head>
+<body>
+<canvas id="game" width="500" height="500"></canvas>
+<script>
+var game = document.getElementById("game")
+var ctx = game.getContext("2d")
+var pad = [200,480,100,20]
+var ball = [245,300,10,10]
+var vel = [-1,1]
+var mouse = []
+var bricks = []
+var row = 10
+var column = 10
+var speed = 5
+var score = 0
+var highscore = 0
+var gap = 2
+var visiblehs = false
+var width = game.width / row - gap/2
+var height = game.height/2 / column - gap/2
+ctx.imageSmoothingEnabled = false
+window.addEventListener("mousemove",(e)=>{
+var rect = game.getBoundingClientRect();
+var scale = [game.width/rect.width,game.height/rect.height]
+mouse = [e.clientX*scale[0],e.clientY*scale[0]];
+})
+window.addEventListener("touchmove",(e)=>{var rect = game.getBoundingClientRect();
+var scale = [game.width/rect.width,game.height/rect.height]
+mouse = [e.touches[0].clientX*scale[0],e.touches[0].clientY*scale[1]];})
+highscore = localStorage.getItem("breakouthighscore")
+if (!highscore) {highscore = 0}
+if (window.innerHeight < window.innerWidth) {
+game.style.width = window.innerHeight + "px"
+game.style.height = window.innerHeight + "px"
+} else {
+game.style.width = window.innerWidth + "px"
+game.style.height = window.innerWidth + "px"
+}
+function addbricks() {
+for (x=0;x<row;x++) {
+for (y=0;y<column;y++) {
+bricks.push([x*(game.width/row) + gap/2,y*(game.width/2/row) + gap/2, width,height])
+}
+}}
+function normalized(vector) {
+var l = Math.sqrt(vector[0]*vector[0] + vector[1]*vector[1])
+if (l === 0) {return [0,0]}
+return [vector[0]/l,vector[1]/l]
+}
+function touching(shape1,shape2) {
+if (shape1[0] + shape1[2] < shape2[0] ||
+shape2[0] + shape2[2] < shape1[0] ||
+shape1[1] + shape1[3] < shape2[1] ||
+shape2[1] + shape2[3] < shape1[1]
+) {return false} else {return true}
+}
+function upd() {
+pad[0] = mouse[0] - pad[2] / 2
+if (!visiblehs) {
+ball[0] += vel[0]*speed
+ball[1] += vel[1]*speed
+}
+for (i=0;i<bricks.length;i++) {
+var brk = bricks[i]
+if (touching(brk,ball)) {
+var overlap = [0,0]
+if (brk[0] > ball[0]) {overlap[0] += Math.abs(ball[0] + ball[2] - brk[0])}
+if (brk[0] < ball[0]) {overlap[0] += Math.abs(brk[0] + brk[2] - ball[0])}
+if (brk[1] < ball[1]) {overlap[1] += Math.abs(brk[1] + brk[3] - ball[1])}
+if (brk[1] > ball[1]) {overlap[1] += Math.abs(ball[1] + ball[3] - brk[1])}
+if (overlap[0] > overlap[1]) {vel[1] *= -1} else {vel[0] *= -1}
+bricks.splice(i,1)
+score += 1
+speed += 0.1
+if (bricks == []) {addbricks(); speed = speed - column*row/10 + 1; ball = [245,300,10,10]}
+}
+}
+if (touching(ball,pad)) {vel[1] = -vel[1];
+vel = normalized([-Math.min(pad[0]+pad[2]/2-ball[0],50)/50,vel[1]])
+while (touching(pad,ball)) {ball[1] -= 1}}
+if (ball[0] < 0) {vel[0] = -vel[0]}
+if (ball[1] > 500) {bricks = []; 
+visiblehs = true;
+ball = [245,300,10,10]; speed = 0
+if (score > highscore) {highscore = score; localStorage.setItem("breakouthighscore",highscore)}
+setTimeout(()=>{visiblehs = false; addbricks(); score = 0; speed = 5; ball = [245,300,10,10]},3000)}
+if (ball[0]+ball[2] > 500) {vel[0] = -vel[0]}
+if (ball[1]-ball[3] < 0) {vel[1] = -vel[1]}
+}
+function draw() {
+ctx.clearRect(0,0,500,500)
+ctx.fillStyle = "blue"
+ctx.fillRect(pad[0],pad[1],pad[2],pad[3])
+ctx.fillStyle = "green"
+for (i=0;i<bricks.length;i++) {
+ctx.fillRect(bricks[i][0],bricks[i][1],bricks[i][2],bricks[i][3])
+}
+ctx.fillStyle = "white"
+ctx.fillRect(ball[0],ball[1],ball[2],ball[3])
+ctx.font = "20px sans-serif"
+ctx.fillText("Счёт: " + score,250,30)
+if (visiblehs) {ctx.fillText("Рекорд: " + highscore,250,60)}
+}
+function loop() {
+upd()
+draw()
+requestAnimationFrame(loop)
+}
+loop()
+addbricks()
+</script>
