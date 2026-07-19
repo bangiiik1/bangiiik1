@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://3digc0t5v2pc"]
+
+[ext_resource type="Script" uid="uid://bvdphm5wmth8b" path="res://player.gd" id="1_onrkg"]
+[ext_resource type="Texture2D" uid="uid://cq0pm6oi6lv75" path="res://player.png" id="2_i3pqv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hqtel"]
+size = Vector2(32, 32)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_onrkg"]
+bg_color = Color(0.101667, 0.61, 0, 1)
+
+[sub_resource type="Curve" id="Curve_onrkg"]
+_limits = [3.0, 10.0, 0.0, 1.0]
+_data = [Vector2(0.364706, 10), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Gradient" id="Gradient_i3pqv"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="player" type="CharacterBody2D" groups=["player"]]
+script = ExtResource("1_onrkg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_i3pqv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2.38498e-08, 0)
+shape = SubResource("RectangleShape2D_hqtel")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="hp" type="ProgressBar" parent="."]
+offset_left = -31.0
+offset_top = -36.0
+offset_right = 29.0
+offset_bottom = -20.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_onrkg")
+show_percentage = false
+
+[node name="particles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 300
+one_shot = true
+direction = Vector2(2.08189e-12, -1)
+spread = 90.0
+gravity = Vector2(2.08189e-12, 2.08189e-12)
+initial_velocity_min = 19.23
+initial_velocity_max = 38.46
+angular_velocity_max = 83.08
+scale_amount_curve = SubResource("Curve_onrkg")
+color_ramp = SubResource("Gradient_i3pqv")

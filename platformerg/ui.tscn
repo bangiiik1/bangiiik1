@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmmtujt11po84"]
+
+[ext_resource type="Texture2D" uid="uid://tl2b4h8l48f1" path="res://arrow.png" id="1_fyqef"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m6e0p"]
+
+[node name="ui" type="CanvasLayer"]
+
+[node name="jump" type="TouchScreenButton" parent="."]
+position = Vector2(879, 518)
+scale = Vector2(7.44092, 7.44092)
+shape = SubResource("CircleShape2D_m6e0p")
+action = "ui_up"
+
+[node name="Sprite2D" type="Sprite2D" parent="jump"]
+modulate = Color(1, 1, 1, 0.298039)
+scale = Vector2(0.249431, 0.249431)
+texture = ExtResource("1_fyqef")
+
+[node name="left" type="TouchScreenButton" parent="."]
+position = Vector2(96, 520)
+scale = Vector2(7.44092, 7.44092)
+shape = SubResource("CircleShape2D_m6e0p")
+action = "ui_left"
+
+[node name="Sprite2D" type="Sprite2D" parent="left"]
+modulate = Color(1, 1, 1, 0.298039)
+rotation = -1.5708
+scale = Vector2(0.249431, 0.249431)
+texture = ExtResource("1_fyqef")
+
+[node name="right" type="TouchScreenButton" parent="."]
+position = Vector2(259, 520)
+rotation = -3.14159
+scale = Vector2(7.44092, 7.44092)
+shape = SubResource("CircleShape2D_m6e0p")
+action = "ui_right"
+
+[node name="Sprite2D" type="Sprite2D" parent="right"]
+modulate = Color(1, 1, 1, 0.298039)
+rotation = -1.5708
+scale = Vector2(0.249431, 0.249431)
+texture = ExtResource("1_fyqef")

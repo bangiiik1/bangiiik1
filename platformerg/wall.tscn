@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://0qi86njcv7lq"]
+
+[ext_resource type="Texture2D" uid="uid://bj3m00oki4n5x" path="res://wall.png" id="1_xxgf6"]
+[ext_resource type="Script" uid="uid://yho2uywb3ann" path="res://wall.gd" id="1_y4f30"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y4f30"]
+size = Vector2(64, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iuee5"]
+size = Vector2(66, 66)
+
+[sub_resource type="Curve" id="Curve_y4f30"]
+_limits = [5.0, 20.0, 0.0, 1.0]
+_data = [Vector2(0.0549451, 20), 0.0, 0.0, 0, 0, Vector2(1, 5.54217), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_iuee5"]
+colors = PackedColorArray(0.0833333, 1, 0, 1, 0.569167, 1, 0.53, 0)
+
+[node name="wall" type="StaticBody2D"]
+script = ExtResource("1_y4f30")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_xxgf6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(9.25856e-07, 0)
+shape = SubResource("RectangleShape2D_y4f30")
+
+[node name="touch" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="touch"]
+position = Vector2(9.59637e-07, 0)
+shape = SubResource("RectangleShape2D_iuee5")
+
+[node name="checkpoint" type="CPUParticles2D" parent="."]
+top_level = true
+emitting = false
+amount = 300
+lifetime = 2.89
+spread = 180.0
+gravity = Vector2(2.08189e-12, 2.08189e-12)
+initial_velocity_min = 40.0
+initial_velocity_max = 80.0
+angular_velocity_min = -200.0
+angular_velocity_max = 200.0
+scale_amount_curve = SubResource("Curve_y4f30")
+color_ramp = SubResource("Gradient_iuee5")
+
+[connection signal="body_entered" from="touch" to="." method="_on_touch_body_entered"]
+[connection signal="body_exited" from="touch" to="." method="_on_touch_body_exited"]

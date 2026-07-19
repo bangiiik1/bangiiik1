@@ -1,0 +1,389 @@
+[gd_scene load_steps=6 format=3 uid="uid://4oqixk6oh7c2"]
+
+[ext_resource type="Script" uid="uid://tsd5emwe7ldu" path="res://main.gd" id="1_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://0qi86njcv7lq" path="res://wall.tscn" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://3digc0t5v2pc" path="res://player.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://bmmtujt11po84" path="res://ui.tscn" id="3_h2yge"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lquwl"]
+
+[node name="main" type="Node2D"]
+script = ExtResource("1_1bvp3")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -4034.0
+offset_top = -3680.0
+offset_right = 10796.0
+offset_bottom = 5358.0
+color = Color(0, 0.183912, 0.322107, 1)
+
+[node name="player" parent="." instance=ExtResource("2_h2yge")]
+position = Vector2(603, 330)
+
+[node name="wall" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(605, 433)
+scale = Vector2(5.08, 1)
+checkpoint = true
+
+[node name="wall3" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(1091, 430)
+scale = Vector2(5.08, 1)
+
+[node name="wall4" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(1546, 428)
+scale = Vector2(5.08, 1)
+
+[node name="wall5" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(2026, 423)
+scale = Vector2(5.08, 1)
+
+[node name="wall6" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(2175, 235)
+scale = Vector2(0.393177, 5.3224)
+
+[node name="wall7" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(2121, 325)
+scale = Vector2(1.61991, 0.20698)
+
+[node name="wall8" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(2126, 237)
+scale = Vector2(1.68098, 0.245381)
+
+[node name="wall9" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(2123, 149)
+scale = Vector2(1.53387, 0.270087)
+
+[node name="wall11" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(2546, 429)
+scale = Vector2(8.70067, 0.704779)
+
+[node name="wall12" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(2545, 383)
+scale = Vector2(0.940673, 0.704779)
+iskill = true
+
+[node name="wall13" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(2385, 384)
+scale = Vector2(0.940673, 0.704779)
+iskill = true
+
+[node name="wall14" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(2688, 382)
+scale = Vector2(0.940673, 0.704779)
+iskill = true
+
+[node name="wall10" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(2123, 77)
+scale = Vector2(1.39123, 0.237068)
+
+[node name="wall15" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(2130, 68)
+scale = Vector2(1.39123, 0.237068)
+checkpoint = true
+
+[node name="wall16" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(2786, 405)
+scale = Vector2(1.39123, 0.237068)
+checkpoint = true
+
+[node name="wall19" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(3026, -243)
+scale = Vector2(1.39123, 0.237068)
+checkpoint = true
+
+[node name="wall24" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(3610, -256)
+scale = Vector2(1.39123, 0.237068)
+checkpoint = true
+
+[node name="wall20" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(3399, -243)
+scale = Vector2(9.95241, 0.23572)
+
+[node name="wall29" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(3704, -381)
+scale = Vector2(0.370166, -0.466827)
+instantkill = true
+
+[node name="wall30" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(3806, -426)
+scale = Vector2(0.370166, -0.466827)
+instantkill = true
+
+[node name="wall26" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(3704, -336)
+scale = Vector2(0.368942, 0.909879)
+
+[node name="wall28" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(3651, -392)
+scale = Vector2(-1.25265, 0.179327)
+
+[node name="wall31" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(4013, -355)
+scale = Vector2(-1.25265, 0.179327)
+checkpoint = true
+
+[node name="wall32" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(4087, -355)
+scale = Vector2(-0.884567, 0.241397)
+instantkill = true
+
+[node name="wall33" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(4221, -356)
+scale = Vector2(-1.84374, 0.241397)
+instantkill = true
+
+[node name="wall34" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(4134, -199)
+scale = Vector2(-0.884567, 0.241397)
+
+[node name="wall39" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(4823, -197)
+scale = Vector2(-0.884567, 0.241397)
+checkpoint = true
+
+[node name="wall42" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(5882, -137)
+scale = Vector2(-8.65614, 0.241397)
+bounce = 500
+
+[node name="wall46" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(6350, -133)
+scale = Vector2(-3.22802, 0.704816)
+checkpoint = true
+
+[node name="wall43" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(5709, -349)
+scale = Vector2(-0.398373, 2.22881)
+instantkill = true
+
+[node name="wall44" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(5904, -347)
+scale = Vector2(-0.398373, 2.22881)
+instantkill = true
+
+[node name="wall45" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(6064, -347)
+scale = Vector2(-0.398373, 2.22881)
+instantkill = true
+
+[node name="wall40" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(4918, -194)
+rotation = 0.473717
+scale = Vector2(-0.884567, 0.241397)
+bounce = 500
+
+[node name="wall41" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(5400, -67.9999)
+rotation = 0.473717
+scale = Vector2(-0.884567, 0.241397)
+bounce = 500
+
+[node name="wall35" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(4457, -199)
+scale = Vector2(-8.77982, 0.241397)
+iskill = true
+
+[node name="wall27" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(3806, -381)
+scale = Vector2(0.368942, 0.909879)
+
+[node name="wall21" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(3203, -270)
+scale = Vector2(1.12564, 0.938591)
+instantkill = true
+
+[node name="wall22" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(3331, -270)
+scale = Vector2(1.12564, 0.938591)
+instantkill = true
+
+[node name="wall25" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(4286, -239)
+scale = Vector2(1.12564, 0.938591)
+instantkill = true
+
+[node name="wall36" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(4448, -238)
+scale = Vector2(1.12564, 0.938591)
+instantkill = true
+
+[node name="wall37" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(4607, -238)
+scale = Vector2(1.12564, 0.938591)
+instantkill = true
+
+[node name="wall38" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(4743, -238)
+scale = Vector2(1.12564, 0.938591)
+instantkill = true
+
+[node name="wall23" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(3457, -270)
+scale = Vector2(1.12564, 0.938591)
+instantkill = true
+
+[node name="wall17" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(2962, 45)
+scale = Vector2(0.549219, 8.96312)
+
+[node name="wall18" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(2773, -47)
+scale = Vector2(0.549219, 8.96312)
+
+[node name="wall2" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(604, 478)
+scale = Vector2(3.50481, 0.504949)
+
+[node name="ui" parent="." instance=ExtResource("3_h2yge")]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 527.0
+offset_top = 283.0
+offset_right = 681.0
+offset_bottom = 306.0
+text = "Добро пожаловать"
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 1922.0
+offset_top = 296.0
+offset_right = 2076.0
+offset_bottom = 319.0
+text = "Ты дошёл сюда!?
+Попробуй это!!"
+
+[node name="Label3" type="Label" parent="."]
+offset_left = 1922.0
+offset_top = 296.0
+offset_right = 2076.0
+offset_bottom = 319.0
+text = "Ты дошёл сюда!?
+Попробуй это!!"
+
+[node name="Label7" type="Label" parent="."]
+offset_left = 2240.0
+offset_top = 316.0
+offset_right = 2495.0
+offset_bottom = 365.0
+text = "Не касайся этих красных штук. 
+Они делают больно!"
+
+[node name="Label11" type="Label" parent="."]
+offset_left = 2927.0
+offset_top = -337.0
+offset_right = 3017.0
+offset_bottom = -288.0
+text = "Молодца!"
+
+[node name="Label14" type="Label" parent="."]
+offset_left = 3196.0
+offset_top = -388.0
+offset_right = 3549.0
+offset_bottom = -339.0
+text = "Нажми на меня если ты очень анскильный
+ нубяра с раковой опухолью мозга"
+
+[node name="skiproute" type="TouchScreenButton" parent="Label14"]
+position = Vector2(171, 22)
+scale = Vector2(18.7519, 2.64396)
+shape = SubResource("RectangleShape2D_lquwl")
+
+[node name="Label15" type="Label" parent="."]
+offset_left = 3196.0
+offset_top = -388.0
+offset_right = 3549.0
+offset_bottom = -339.0
+text = "Нажми на меня если ты очень анскильный
+ нубяра с раковой опухолью мозга"
+
+[node name="skiproute" type="TouchScreenButton" parent="Label15"]
+position = Vector2(171, 22)
+scale = Vector2(18.7519, 2.64396)
+shape = SubResource("RectangleShape2D_lquwl")
+
+[node name="Label12" type="Label" parent="."]
+offset_left = 3011.0
+offset_top = -223.0
+offset_right = 3207.0
+offset_bottom = -174.0
+text = "Чёрный прямоугольник
+делает ОЧЕНЬ больно"
+
+[node name="Label13" type="Label" parent="."]
+offset_left = 3254.0
+offset_top = -221.0
+offset_right = 3450.0
+offset_bottom = -172.0
+text = " Пощекотай нервы > :D"
+
+[node name="Label16" type="Label" parent="."]
+offset_left = 3931.0
+offset_top = -321.0
+offset_right = 4127.0
+offset_bottom = -272.0
+text = "Неплохо справляешься!"
+
+[node name="Label17" type="Label" parent="."]
+offset_left = 4774.0
+offset_top = -158.0
+offset_right = 4970.0
+offset_bottom = -109.0
+text = "Это что, лимонад?"
+
+[node name="Label18" type="Label" parent="."]
+offset_left = 6331.0
+offset_top = -222.0
+offset_right = 6527.0
+offset_bottom = -173.0
+text = "всё!"
+
+[node name="Label4" type="Label" parent="."]
+offset_left = 2073.0
+offset_top = 227.0
+offset_right = 2227.0
+offset_bottom = 276.0
+rotation = -2.26311
+text = "> > >"
+
+[node name="Label8" type="Label" parent="."]
+offset_left = 2893.0
+offset_top = 301.0
+offset_right = 3047.0
+offset_bottom = 350.0
+rotation = -2.6193
+text = "> > > > > >"
+
+[node name="Label9" type="Label" parent="."]
+offset_left = 2830.0
+offset_top = 190.0
+offset_right = 2984.0
+offset_bottom = 239.0
+rotation = -0.578335
+text = "> > > > > >"
+
+[node name="Label10" type="Label" parent="."]
+offset_left = 2890.0
+offset_top = 107.0
+offset_right = 3044.0
+offset_bottom = 156.0
+rotation = -2.64141
+text = "> > > > > >"
+
+[node name="Label5" type="Label" parent="."]
+offset_left = 2045.0
+offset_top = 182.0
+offset_right = 2199.0
+offset_bottom = 231.0
+rotation = -1.76505
+text = "> > >"
+
+[node name="Label6" type="Label" parent="."]
+offset_left = 2040.0
+offset_top = 129.0
+offset_right = 2194.0
+offset_bottom = 178.0
+rotation = -0.699587
+text = "> > >"
+
+[connection signal="pressed" from="Label14/skiproute" to="." method="_on_skiproute_pressed"]
+[connection signal="pressed" from="Label15/skiproute" to="." method="_on_skiproute_pressed"]
