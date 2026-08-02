@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://bb75dxxfdhge6"]
+
+[ext_resource type="Script" uid="uid://cygmlia01ywij" path="res://bear.gd" id="1_8ceia"]
+[ext_resource type="Texture2D" uid="uid://b5nshxk7bh70h" path="res://bear.png" id="1_wvk3l"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8ceia"]
+radius = 26.0192
+
+[node name="bear" type="CharacterBody2D" groups=["bear"]]
+scale = Vector2(1.5, 1.5)
+script = ExtResource("1_8ceia")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_wvk3l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 0)
+shape = SubResource("CircleShape2D_8ceia")
+
+[node name="timer" type="Timer" parent="."]
+wait_time = 0.3
+
+[node name="walktimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+
+[connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="walktimer" to="." method="_on_walktimer_timeout"]
