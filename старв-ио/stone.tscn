@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://vu0dq3umwm6a"]
+
+[ext_resource type="Texture2D" uid="uid://0qxbtcsbeiif" path="res://stone.png" id="1_6s6ed"]
+[ext_resource type="Script" uid="uid://cr4k0cx6lawa4" path="res://stone.gd" id="1_rq0vd"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rq0vd"]
+radius = 32.0156
+
+[node name="stone" type="StaticBody2D" groups=["stone"]]
+scale = Vector2(1.5, 1.5)
+script = ExtResource("1_rq0vd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_6s6ed")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_rq0vd")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.3
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
